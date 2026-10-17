@@ -1,0 +1,7 @@
+{
+  "name": "yoru-music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
