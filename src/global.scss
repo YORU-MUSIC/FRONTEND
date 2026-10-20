@@ -35,3 +35,133 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+.auth-page {
+  --background: #101014;
+  color: #f5f2fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 22px;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #1b1a22;
+    border: 1px solid #302b3a;
+    border-radius: 22px;
+    padding: 32px 26px;
+    box-shadow: 0 20px 60px rgba(189,156,255,.08);
+  }
+
+  .logo {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    text-align: center;
+
+    span { color: #bd9cff; }
+  }
+
+  .tagline {
+    text-align: center;
+    color: #9994a6;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+
+  .subtitle {
+    color: #9994a6;
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    color: #9994a6;
+    margin: 14px 0 6px;
+    letter-spacing: 1px;
+  }
+
+  input {
+    width: 100%;
+    background: #101014;
+    border: 1px solid #393442;
+    border-radius: 12px;
+    padding: 14px;
+    color: #f5f2fa;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color .2s;
+
+    &:focus {
+      outline: none;
+      border-color: #bd9cff;
+    }
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-top: 22px;
+    padding: 15px;
+    border: 0;
+    border-radius: 14px;
+    background: #bd9cff;
+    color: #171020;
+    font-weight: 750;
+    font-size: 15px;
+    cursor: pointer;
+    transition: opacity .2s;
+
+    &:disabled { opacity: .5; cursor: not-allowed; }
+  }
+
+  .btn-link {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    background: none;
+    border: 0;
+    color: #bd9cff;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .error {
+    background: #3a1f2a;
+    color: #ff9db4;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 14px;
+  }
+
+  .success {
+    background: #1f3a2a;
+    color: #9dffc4;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 14px;
+  }
+
+  .code-input {
+    text-align: center;
+    font-size: 26px;
+    letter-spacing: 12px;
+    font-weight: 800;
+    color: #bd9cff;
+  }
+}

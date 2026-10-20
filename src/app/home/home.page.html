@@ -1,20 +1,140 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="yoru-app">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <header>
+      <div>
+        <div class="logo">YORU<span>♪</span></div>
+        <div class="tag">TU MÚSICA, TU UNIVERSO</div>
+      </div>
+      <div class="header-actions">
+        <button class="logout-btn" (click)="logout()" title="Cerrar sesión">⏻</button>
+        <div style="font-size:24px">☾</div>
+      </div>
+    </header>
+
+    <section>
+      <div class="tag">TU ESPACIO PERSONAL</div>
+      <h2>Buenas noches, {{ welcomeName }}.</h2>
+      <p>Encuentra tu propio ritmo.</p>
+
+      <button class="add" (click)="pickFiles()">＋ Añadir música del teléfono</button>
+      <input
+        #fileInput
+        type="file"
+        accept="audio/*"
+        multiple
+        hidden
+        (change)="onFilesSelected($event)"
+      >
+    </section>
+
+    <section id="library">
+      <div class="section">
+        <h2>Tu biblioteca</h2>
+        <span class="count">{{ countLabel }}</span>
+      </div>
+
+      <div style="margin:16px 0;display:flex;gap:8px">
+        <input
+          id="search"
+          type="search"
+          placeholder="Buscar canción o archivo..."
+          [(ngModel)]="searchQuery"
+        >
+        <button
+          id="filterFavorites"
+          [class.active]="filterFavoritesActive"
+          (click)="toggleFilterFavorites()"
+        >
+          {{ filterFavoritesActive ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <div id="songs">
+        @if (visibleSongs.length === 0) {
+          <div class="empty">
+            <div class="symbol">♫</div>
+            <strong>{{ playlist.length ? 'No hay canciones que coincidan.' : 'Tu música empieza aquí' }}</strong>
+            @if (!playlist.length) {
+              <p>Selecciona archivos de audio de tu teléfono para comenzar.</p>
+            }
+          </div>
+        } @else {
+          @for (item of visibleSongs; track item.song.url) {
+            <div
+              class="song"
+              [class.active]="item.index === current"
+              (click)="playSong(item.index)"
+            >
+              <div class="cover">♫</div>
+              <div class="song-info">
+                <strong>{{ item.song.name }}</strong>
+                <small>{{ item.song.artist }}</small>
+              </div>
+              <button
+                class="play-now"
+                (click)="$event.stopPropagation(); toggleFavorite(item.song)"
+              >
+                {{ isFavorite(item.song) ? '♥' : '♡' }}
+              </button>
+            </div>
+          }
+        }
+      </div>
+    </section>
+
+    <section class="player" id="player">
+      <div class="tag" style="margin-bottom:14px">REPRODUCIENDO</div>
+      <div class="player-top">
+        <div class="big-cover">♫</div>
+        <div class="track">
+          <strong>{{ currentSong?.name || 'Ninguna canción' }}</strong>
+          <small>{{ currentSong?.artist || 'Elige algo para escuchar' }}</small>
+        </div>
+        <button class="ctrl" (click)="toggleLikeCurrent()">
+          {{ isFavorite(currentSong) ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <input
+        id="seek"
+        type="range"
+        min="0"
+        max="1000"
+        [(ngModel)]="seekValue"
+        (input)="onSeekInput()"
+      >
+      <div class="times">
+        <span>{{ currentTime }}</span>
+        <span>{{ duration }}</span>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl" [style.color]="shuffle ? 'var(--purple)' : 'var(--text)'" (click)="toggleShuffle()">⤨</button>
+        <button class="ctrl" (click)="prevSong()">◀|</button>
+        <button class="ctrl main" (click)="togglePlay()">{{ isPlaying ? 'Ⅱ' : '▶' }}</button>
+        <button class="ctrl" (click)="nextSong()">|▶</button>
+        <button class="ctrl" [style.color]="repeat ? 'var(--purple)' : 'var(--text)'" (click)="toggleRepeat()">↻</button>
+      </div>
+      <p class="tag" style="text-align:center;margin-bottom:0">{{ status }}</p>
+    </section>
+
+    <audio
+      #audioEl
+      preload="metadata"
+      (loadedmetadata)="onLoadedMetadata()"
+      (timeupdate)="onTimeUpdate()"
+      (play)="onPlay()"
+      (pause)="onPause()"
+      (ended)="onEnded()"
+      (error)="onError()"
+    ></audio>
+
+    <footer>
+      <button class="selected" (click)="scrollTop()"><span>⌂</span>Inicio</button>
+      <button (click)="scrollLibrary()"><span>♫</span>Biblioteca</button>
+      <button (click)="scrollPlayer()"><span>◉</span>Reproductor</button>
+    </footer>
+
   </div>
 </ion-content>

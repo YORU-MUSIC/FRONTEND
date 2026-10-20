@@ -1,0 +1,26 @@
+<ion-content>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="logo">YORU<span>♪</span></div>
+      <div class="tagline">TU MÚSICA, TU UNIVERSO</div>
+
+      <h1>Bienvenido de nuevo</h1>
+      <p class="subtitle">Inicia sesión para escuchar tu música.</p>
+
+      <label>EMAIL O USUARIO</label>
+      <input type="text" [(ngModel)]="email" autocomplete="username">
+
+      <label>CONTRASEÑA</label>
+      <input type="password" [(ngModel)]="password" autocomplete="current-password" (keyup.enter)="submit()">
+
+      @if (error) { <div class="error">{{ error }}</div> }
+
+      <button class="btn-primary" [disabled]="loading" (click)="submit()">
+        {{ loading ? 'Entrando…' : 'Iniciar sesión' }}
+      </button>
+
+      <button class="btn-link" routerLink="/forgot-password">¿Olvidaste tu contraseña?</button>
+      <button class="btn-link" routerLink="/register">Crear cuenta nueva</button>
+    </div>
+  </div>
+</ion-content>
